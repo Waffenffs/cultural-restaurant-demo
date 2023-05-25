@@ -14,7 +14,7 @@ function Menu() {
     'maranao': false,
   })
 
-  const [currentContentData, setCurrentContentData] = useState<any>('none')
+  const [currentContentData, setCurrentContentData] = useState<'none' | Food>('none')
 
   const toggleMenu = (menu_name: string) => {
     switch(menu_name) {

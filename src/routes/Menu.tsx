@@ -3,21 +3,18 @@ import Dropdown from '../components/Dropdown';
 import Content from '../components/Content';
 import { tagalogCuisine, bisayaCuisine, maranaoCuisine } from '../data/Cuisine';
 import { useState } from 'react';
+import { Food } from '../data/Cuisine';
+import SearchBar from '../components/SearchBar';
 
 function Menu() {
-  // two components: dropdowns & content page
-    // dropdowns will have attributes like: cuisine name, and cuisine options (for dropdown)
-      // each cuisine option will have their own content page
-
-  /* TO-DO */
-  // find different recipes for each cuisine (at least 4)
-    // work on content page (when clicking on dropdown item it will show the content)
 
   const [activeMenus, setActiveMenus] = useState({
     'tagalog': false,
     'bisaya': false,
     'maranao': false,
   })
+
+  const [currentContentData, setCurrentContentData] = useState<any>('none')
 
   const toggleMenu = (menu_name: string) => {
     switch(menu_name) {
@@ -44,29 +41,39 @@ function Menu() {
     }
   }
 
+  const passDataToContent = (data: Food) => {
+    setCurrentContentData(data)
+  }
+
   return (
-    <main className='w-screen h-screen flex flex-row'>
-      <nav className='flex flex-col gap-10 w-1/4 bg-[#CCD5AE] pt-5'>
+    <main className='w-screen h-screen flex flex-row flex-wrap relative'>
+      <nav className='flex flex-col gap-10 w-1/4 bg-[#CCD5AE] pt-5 h-auto sticky '>
         <Dropdown 
           cuisine_name={"Tagalog"} 
           cuisine={tagalogCuisine} 
           active={activeMenus.tagalog} 
           toggle={() => toggleMenu('Tagalog')}
+          pass={passDataToContent}
         />
         <Dropdown 
           cuisine_name={"Bisaya"} 
           cuisine={bisayaCuisine} 
           active={activeMenus.bisaya} 
           toggle={() => toggleMenu('Bisaya')}
+          pass={passDataToContent}
         />
         <Dropdown 
           cuisine_name={"Maranao"} 
           cuisine={maranaoCuisine} 
           active={activeMenus.maranao} 
           toggle={() => toggleMenu('Maranao')}
+          pass={passDataToContent}
         />
+        <SearchBar pass={passDataToContent} />
       </nav>
-      <section></section>
+      <section className='flex-grow'>
+        <Content render={currentContentData} />
+      </section>
     </main>
   )
 }

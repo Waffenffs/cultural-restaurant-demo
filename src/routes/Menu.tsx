@@ -46,8 +46,8 @@ function Menu() {
   }
 
   return (
-    <main className='w-screen h-screen flex flex-row flex-wrap relative'>
-      <nav className='flex flex-col gap-10 w-1/4 bg-[#CCD5AE] pt-5 h-auto sticky '>
+    <main className='w-screen h-screen flex flex-row max-w-full overflow-hidden'>
+      <nav className='flex flex-col gap-10 w-1/4 bg-[#CCD5AE] pt-5 grow'>
         <Dropdown 
           cuisine_name={"Tagalog"} 
           cuisine={tagalogCuisine} 
@@ -71,7 +71,7 @@ function Menu() {
         />
         <SearchBar pass={passDataToContent} />
       </nav>
-      <section className='flex-grow'>
+      <section className='w-full overflow-y-scroll'>
         <Content render={currentContentData} />
       </section>
     </main>
